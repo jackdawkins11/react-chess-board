@@ -23,6 +23,7 @@ var ChessBoard = function (_React$Component) {
 		value: function render() {
 			var _this2 = this;
 
+			console.log(this.state);
 			return React.createElement(
 				"div",
 				null,
@@ -30,24 +31,24 @@ var ChessBoard = function (_React$Component) {
 				this.state.pieces.slice().reverse().map(function (row, rowIdx) {
 					return React.createElement(
 						"div",
-						{ key: rowIdx },
+						{ key: rowIdx, style: { display: "flex" } },
 						" ",
 						row.map(function (piece, colIdx) {
 							return React.createElement(
 								"button",
 								{ key: colIdx, onClick: function onClick(e) {
-										console.log(_this2.state);
-										if (_this2.state.selected == null) {
+										sIdx = _this2.state.selected;
+										pieces = _this2.state.pieces.slice();
+										if (sIdx == null || pieces[sIdx[1]][sIdx[0]] == " ") {
 											_this2.setState({ selected: [colIdx, 7 - rowIdx] });
 										} else {
-											pieces = _this2.state.pieces.slice();
-											sIdx = _this2.state.selected;
 											pieces[7 - rowIdx][colIdx] = pieces[sIdx[1]][sIdx[0]];
 											pieces[sIdx[1]][sIdx[0]] = " ";
 											_this2.setState({ selected: null, pieces: pieces, turn: _this2.state.turn == "w" ? "b" : "w" });
 										}
-									}, style: { outline: "none", border: "none", width: "50px", height: "50px", background: (rowIdx + colIdx) % 2 == 0 ? "gainsboro" : "darkGrey" } },
-								piece
+									},
+									style: { outline: "none", border: "none", width: "50px", height: "50px", background: (rowIdx + colIdx) % 2 == 0 ? "gainsboro" : "darkGrey" } },
+								piece != " " && React.createElement("img", { style: { width: "25px", height: "25px" }, src: "/pngs/" + piece + ".png", alt: "" })
 							);
 						}),
 						" "
